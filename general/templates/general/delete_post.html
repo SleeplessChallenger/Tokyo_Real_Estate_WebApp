@@ -1,0 +1,61 @@
+{% extends 'general/start_page.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'general/delete_post' %}">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock extrahead %}
+
+{% block content %}
+<div class="container forget-password">
+    <div class="row">
+        <div class="col-md-12 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="text-center">
+
+                        <img class='graffiti' src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YW5pbWV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60" alt="car-key" border="0">
+
+                        <h2 class="text-center">Sure to erase your post?</h2>
+
+                        <form id="register-form" role="form" autocomplete="off" class="form" method="post">
+                        	{% csrf_token %}
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select class="form-control" id="sel1">
+                                        <option selected="true" disabled="disabled">Please Select Deletion Reason</option>
+                                        <option>Sold/Rented via this site</option>
+                                        <option>Did above somewhere else</option>
+                                        <option>Change my mind</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                   	<a class='btn btn-outline-secondary' href="{% url 'post-info' object.id %}">
+										Cancel
+									</a>
+                                </div>
+                               	<button class='btn btn-outline-danger' type='submit'>
+									Yes, delete!
+								</button>
+                            </div>
+
+
+                        </form>
+
+
+                     </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends  'general/start_page.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'users/profile.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+    <div class="container">
+    	<div class="row">
+    		<div class="col-lg-3 col-sm-6">
+
+                <div class="card hovercard">
+                    <div class="cardheader">
+
+                    </div>
+                    <div class="avatar">
+                        <img alt="" src="{{ user.profile.image.url }}">
+                    </div>
+
+                <form method='POST' enctype="multipart/form-data">
+    			{% csrf_token %}
+
+                    <div class="info">
+                        <div class="title">
+                            <a target="_blank" href="{{ user.profile.image.url }}">{{ user.username }}</a>
+                        </div>
+                        <div class="desc"></div>
+                        <div class="desc">{{ user.profile.first_name }}</div>
+                        <div class="desc">{{ user.profile.last_name }}</div>
+                    </div>
+
+
+                    <div class="bottom">
+                        <a class="btn btn-primary btn-twitter btn-sm" href="{% url 'erase-user' %}">
+                            Delete account
+                        </a>
+
+                        {{ u_form|crispy }}
+                        {{ p_form|crispy }}
+      
+                    </div>
+                    <div class='form-group'>
+    				<button class='btn btn-outline-info' type='submit'>
+    					Update!
+    				</button>
+    			</div>
+                </form>
+
+
+                </div>
+
+            </div>
+
+    	</div>
+    </div>
+
+
+{% endblock content %}

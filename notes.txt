@@ -1,0 +1,50 @@
+1. To make profile appear when we create user -> add signal
+
+2. If superuser or staff user => no need to have "able to add posts". But if ordinary
+User -> required check
+
+3. Also only superuser or staff user is eligible to see page with all users
+
+4. To display particular user we need to use query set if Class-based view or
+Context if function based view. If you put filtered users inside
+render() as in Flask -> causes error
+
+5. Use crispy to make forms look nicer
+
+6. After login, if user doesn't have "next" parameter, the site will redirect
+To page specified in LOGIN_REDIRECT_URL (settings.py), but if it does have next
+=> to that next page (it's when you hit some page, but was redirected to login)
+
+7. LOGIN_URL: here we specify at what page @login_required will send the user
+
+8. Password reset is done in 4 step:
+	- password reset page
+	- password reset done page
+	- password reset do page (from email)
+	- password confirm done
+
+9. Consider which routes should be protected with further decorators
+
+10. Only particular users (superuser, staff, can_add_posts) can visit "Add posts page"
+
+11. altered existing decorator to enable messaging
+
+12. In 'general' we have class-based views. When creating a property adding form
+Class-based view will handle form itself, hence in template we just need to
+Paste {{ form }}
+
+13. When user goes via post page -> profill data. Otherwise don't fo so
+
+14. Returns path to any instance. In our case we want our view to know the url of a model object -> get_absolute_url.
+Next in this function we tell which url to return by reverse() function which
+Doesn't redirect like redirect() does, but simply returns url and view will
+Handle it for us
+
+15 Model prediction form will be filled if come from concrete post (either on all posts,
+User posts, concrete post), otherwise it will be blank.
+
+16. After prediction is made -> if data in sessions -> redirect to special page
+If no data is found (I"ll remove data from cookie after it's presented as visit from other page doesn't have any meaning) 
+
+
+

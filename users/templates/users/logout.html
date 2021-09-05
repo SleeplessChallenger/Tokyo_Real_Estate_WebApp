@@ -1,0 +1,22 @@
+{% extends 'general/start_page.html' %}
+{% load static %}
+
+{% block extrahead %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'users/logout.css' %}">
+
+{% endblock %}
+
+
+{% block content %}
+<h2>You have been logged out!</h2>
+<hr>
+<div class='border-top pt-3'>
+	<small class='text-muted'>
+	<a class='again_login' href="{% url 'login' %}">Log In again</a>
+	</small>
+</div>
+
+<img class='gorgeous_img' src="https://images.unsplash.com/photo-1583200786218-ccee132a8567?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fGFuaW1lfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60">
+
+{% endblock %}

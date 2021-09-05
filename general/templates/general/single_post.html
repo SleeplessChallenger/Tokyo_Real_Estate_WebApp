@@ -1,0 +1,72 @@
+{% extends 'general/start_page.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'general/all_properties.css' %}">
+
+<title>一つの不動産</title>
+
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+  <link rel= "stylesheet" href= "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock extrahead %}
+
+{% block content %}
+
+<body class='property_body'>
+<!--initial sample taken from https://bootsnipp.com/snippets/RW2rx-->
+	<div class = "main panel panel-default z-depth-4">
+		<div class = "panel-body">
+
+			<div class="media">
+			  <div class="media-left">
+			  	<img src="{{ post.author.profile.image.url }}" class="media-object circle">
+			    {% if user == post.author %}
+			   		<div>
+        				<a class='btn btn-secondary btn-sm mt-1 mb-1' href="{% url 'post-update' post.id %}">Update!</a>
+        				<a class='btn btn-danger btn-sm mt-1 mb-1' href="{% url 'post-delete' post.id %}">Delete!</a>
+      				</div>
+			    {% endif %}
+			  </div>
+			  <div class="media-body">
+			    <p><a href="{% url 'user-all-posts' post.author.username %}">{{ post.author }}</a><br>
+			    	<span class = "time">{{ post.date_created|date:"F d, Y" }}</span></p>
+			  </div>
+			</div>
+
+		<div class = "post">
+
+			{% if post.image %}
+				<img class = "not" src ="{{ post.image.url }}">
+			{% endif %}
+
+			<p class = "caption"> <small class='title_only' >{{ post }} </small><a class='link_class' href ="{% url 'post-info' post.id %}"> <br>
+
+			Click to see all info about the property</a>
+			</p>
+			<p class = "read">Year built: {{ post.building_year }}<span class = "right"><b>Price ¥: {{ post.price }}</b></span></p>
+
+				<p class = "read">Time to station: {{ post.time_to_station }}<span class = "right"><b>Property type: {{ post.property_type }}</b></span></p>
+
+				<p class = "read">Floor ratio: {{ post.floor_ratio }}<span class = "right"><b>Coverage ratio: {{ post.coverage_ratio }}</b></span></p>
+
+				<p class = "read">Municipality: {{ post.municipality }}<span class = "right"><b>Municipality code: {{ post.municipality_code }}</b></span></p>
+
+				<p class = "read">City planning: {{ post.city_planning }}<span class = "right"><b>Use: {{ post.use }}</b></span></p>
+
+				<p class = "read">Structure: {{ post.structure }}<span class = "right"><b>Author: {{ post.author }}</b></span></p>
+
+				<p class = "read">District: {{ post.district }}<span class = "right"><b>Nearest station: {{ post.nearest_station }}</b></span></p>
+		</div>
+
+			<center><a href = "{% url 'price-prediction' post.id %}" class = "btn" id = "open">Get approx. price for similar type</a></center>
+
+		</div>
+	</div>
+</body>
+
+{% endblock content %}

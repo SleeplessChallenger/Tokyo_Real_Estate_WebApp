@@ -1,0 +1,85 @@
+{% extends 'general/start_page.html' %}
+{% load static %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'general/all_properties.css' %}">
+
+<title>ユーザーの不動産</title>
+
+
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  
+  <link rel= "stylesheet" href= "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock extrahead %}
+
+{% block content %}
+
+<h2>Properties added by {{ view.kwargs.username }} - {{ page_obj.paginator.count }} </h2>
+
+{% for post in posts %}
+<body class='property_body'>
+<!--initial sample taken from https://bootsnipp.com/snippets/RW2rx-->
+	<div class = "main panel panel-default z-depth-4">
+		<div class = "panel-body">
+
+			<div class="media">
+			  <div class="media-left">
+			  	<img src="{{ post.author.profile.image.url }}" class="media-object circle">
+			    
+			  </div>
+			  <div class="media-body">
+			    <p><a href="{% url 'user-all-posts' post.author.username %}">{{ post.author }}</a><br>
+			    	<span class = "time">{{ post.date_created|date:"F d, Y" }}</span></p>
+			  </div>
+			</div>
+
+		<div class = "post">
+
+			{% if post.image %}
+				<img class = "not" src ="{{ post.image.url }}">
+			{% endif %}
+
+			<p class = "caption"> <small class='title_only' >{{ post }} </small><a class='link_class' href ="{% url 'post-info' post.id %}"> <br>
+
+			Click to see all info about the property</a>
+			</p>
+			<p class = "read">Year built: {{ post.building_year }}<span class = "right"><b>Price ¥: {{ post.price }}</b></span></p>
+		</div>
+
+			<center><a href = "{% url 'price-prediction' post.id %}" class = "btn" id = "open">Get approx. price for similar type</a></center>
+
+		</div>
+	</div>
+</body>
+{% endfor %}
+
+<footer>
+{% if is_paginated %}
+	{% if page_obj.has_previous %}
+     <a class='btn btn-outline-info mb-4' href="?page=1">First</a>
+     <a class='btn btn-outline-info mb-4' href="?page={{ page_obj.previous_page_number }}">Previous</a>
+	{% endif %}
+
+	{% for p in page_obj.paginator.page_range %}
+		{% if page_obj.number == p %}
+		 <a class='btn btn-info mb-4' href="?page={{ p }}">{{ p }}</a>
+		{% elif p > page_obj.number|add:'-2' and p < page_obj.number|add:'2' %}
+		<a class='btn btn-outline-info mb-4' href="?page={{ p }}">{{ p }}</a>
+		{% endif %}
+
+	{% endfor %}
+
+	{% if page_obj.has_next %}
+	  <a class='btn btn-outline-info mb-4' href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a class='btn btn-outline-info mb-4' href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+	{% endif %}
+{% endif %}
+</footer>
+
+{% endblock content %}

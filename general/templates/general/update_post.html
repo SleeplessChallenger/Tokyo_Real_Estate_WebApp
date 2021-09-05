@@ -1,0 +1,40 @@
+{% extends 'general/start_page.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'general/update_post.css' %}">
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock extrahead %}
+
+{% block content %}
+<div class="container">
+		<div class="main">
+			<div class="main-center">
+			<h5>Tweak the post</h5>
+
+				<form class="" method="POST" enctype="multipart/form-data">
+					{% csrf_token %}
+
+					<div class="form-group">
+							{{ form|crispy }}
+					</div>
+
+				<button id='final_button' type="submit">Make changes!</button>
+					
+			</form>
+
+			</div>
+		</div>
+	</div>
+
+{% endblock content %}

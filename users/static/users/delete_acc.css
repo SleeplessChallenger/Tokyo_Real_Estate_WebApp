@@ -1,0 +1,18 @@
+.content-section {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 10em;
+	margin-top: 5em;
+	border: solid black;
+	border-radius: 0.5em;
+	background-color: brown;
+}
+
+.image_specific {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 50rem;
+	background: no-repeat url('https://images.unsplash.com/photo-1520643123291-d6d338b8c753?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGphcGFuZXNlJTIwZ3JhZmZpdGl8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=60');
+}

@@ -1,0 +1,27 @@
+{% extends 'general/start_page.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'general/form_css.css' %}">
+{% endblock extrahead %}
+
+{% block content %}
+
+<div class='content-section'>
+	<form method='POST' enctype="multipart/form-data">
+		{% csrf_token %}
+		<fieldset class='form-group'>
+			<legend class='border-bottom mb-4'>
+				Property price prediction
+			</legend>
+			{{ p_form|crispy }}
+		</fieldset>
+			<div class='form-group'>
+			<button class='btn btn-outline-info' type='submit'>
+				Predict!
+			</button>
+		</div>
+	</form>
+</div>
+
+{% endblock content %}
