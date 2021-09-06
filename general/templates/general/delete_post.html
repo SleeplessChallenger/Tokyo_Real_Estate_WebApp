@@ -3,9 +3,9 @@
 {% load static %}
 
 {% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{% static 'general/delete_post' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'general/delete_post.css' %}">
 
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 {% endblock extrahead %}
@@ -19,7 +19,7 @@
 
                     <div class="text-center">
 
-                        <img class='graffiti' src="https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YW5pbWV8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=60" alt="car-key" border="0">
+                        <img class='graffiti' src="{% static 'general/pages_img/delete_page.jpg' %}" alt="car-key" border="0">
 
                         <h2 class="text-center">Sure to erase your post?</h2>
 
@@ -37,12 +37,10 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                                    	<a class='btn btn-outline-secondary' href="{% url 'post-info' object.id %}">
 										Cancel
 									</a>
-                                </div>
                                	<button class='btn btn-outline-danger' type='submit'>
 									Yes, delete!
 								</button>

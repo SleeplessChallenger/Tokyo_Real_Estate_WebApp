@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import ImageUpload, PricePredictionForm
 from .abstraction_model import RegressionInterface, DecisionTreeInterface
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 first_model = RegressionInterface()
@@ -36,6 +37,8 @@ def calculate_price(request, pk=''):
 
 			prediction_one = first_model.make_prediction(json_data)
 			prediction_two = second_model.make_prediction(json_data)
+			print(prediction_one)
+			print(prediction_two)
 			best_result = prediction_one if prediction_one > prediction_two\
 				else prediction_two
 
@@ -131,11 +134,18 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 		return super().form_valid(form)
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
 	model = PropertyClass
 	success_url = '/all_properties'
 	template_name = 'general/delete_post.html'
 	# to redirect after post is deleted
+	success_message = '%(title) was deleted'
+
+	def get_success_message(self, cleaned_data):
+		return self.success_message % dict(
+			cleaned_data,
+			title=self.object.title
+		)
 
 	def test_func(self):
 		'''

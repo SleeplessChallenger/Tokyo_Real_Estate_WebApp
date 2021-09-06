@@ -8,33 +8,29 @@
 
 {% block content %}
 
-<article class='image_specific'>
+<div class='content-section'>
 
-	<div class='content-section'>
+	<form method='POST'>
+		{% csrf_token %}
+		<fieldset class='form-group'>
+			<legend class='border-bottom mb-4'>
+				Delete Account!
+			</legend>
+			<h2>Do you really want to remove "{{ user.username }}"?</h2>
+			{{ d_form }}
+		</fieldset>
+		<div class='form-group'>
+			<button class='btn btn-outline-danger' type='submit'>
+				Yes, delete!
+			</button>
 
-		<form method='POST'>
-			{% csrf_token %}
-			<fieldset class='form-group'>
-				<legend class='border-bottom mb-4'>
-					Delete Account!
-				</legend>
-				<h2>Do you really want to remove "{{ user.username }}"?</h2>
-				{{ d_form }}
-			</fieldset>
-			<div class='form-group'>
-				<button class='btn btn-outline-danger' type='submit'>
-					Yes, delete!
-				</button>
+			<a class='btn btn-outline-secondary' href="{% url 'profile' %}">
+				Cancel
+			</a>
 
-				<a class='btn btn-outline-secondary' href="{% url 'profile' %}">
-					Cancel
-				</a>
+		</div>
+	</form>
 
-			</div>
-		</form>
-
-	</div>
-
-</article>
+</div>
 
 {% endblock content %}
