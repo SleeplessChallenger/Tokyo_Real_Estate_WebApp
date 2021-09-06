@@ -3,9 +3,15 @@ from django.utils import timezone
 from PIL import Image
 from django.contrib.auth.models import User
 from django.urls import reverse
+from datetime import datetime
 
 
 class PropertyClass(models.Model):
+	'''
+	fields have the same name as
+	dataframe so as to add then
+	easily
+	'''
 	# numerical at first
 	time_to_station = models.IntegerField()
 	building_year = models.IntegerField()
@@ -21,10 +27,12 @@ class PropertyClass(models.Model):
 	use = models.CharField(max_length=10)
 	city_planning = models.CharField(max_length=25)
 	municipality_code = models.IntegerField()
+	# omit age in form, but use in prediction
+	age = models.IntegerField()
 
 	# further info
 	price = models.BigIntegerField()
-	image = models.ImageField(upload_to='propery_photo')
+	image = models.ImageField(upload_to='propery_photo', default='default_property.jpg')
 	title = models.CharField(max_length=100)
 	date_created = models.DateTimeField(default=timezone.now)
 	author = models.ForeignKey(User, on_delete=models.CASCADE, default = "")

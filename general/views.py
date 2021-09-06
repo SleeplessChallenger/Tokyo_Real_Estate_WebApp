@@ -37,8 +37,8 @@ def calculate_price(request, pk=''):
 
 			prediction_one = first_model.make_prediction(json_data)
 			prediction_two = second_model.make_prediction(json_data)
-			print(prediction_one)
-			print(prediction_two)
+			# print(prediction_one)
+			# print(prediction_two)
 			best_result = prediction_one if prediction_one > prediction_two\
 				else prediction_two
 
@@ -85,7 +85,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 	fields = ['title', 'time_to_station', 'building_year', 'coverage_ratio',
 		'floor_ratio', 'property_type', 'municipality', 'district',
 		'nearest_station', 'structure', 'use', 'city_planning', 
-		'municipality_code', 'price', 'image']
+		'municipality_code', 'price', 'age', 'image']
 
 	def form_valid(self, form):
 		form.instance.author = self.request.user

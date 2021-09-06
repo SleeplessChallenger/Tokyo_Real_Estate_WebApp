@@ -8,6 +8,8 @@ class AbstractModels(ABC):
 	def make_prediction(self, data):
 		raise NotImplementedError("Method isn't realized")
 
+# one class with 2 compositions of those below
+# that are initieated 
 
 class RegressionInterface(AbstractModels):
 	def __init__(self):
