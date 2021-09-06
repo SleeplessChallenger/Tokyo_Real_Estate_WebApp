@@ -46,5 +46,9 @@ User posts, concrete post), otherwise it will be blank.
 16. After prediction is made -> if data in sessions -> redirect to special page
 If no data is found (I"ll remove data from cookie after it's presented as visit from other page doesn't have any meaning) 
 
+17. To write files in img: 1. Html: src="{% static 'general/pages_img/delete_page.jpg' %}"
+2. Css: url("pages_img/profile_page.jpg")
+
+
 
 
