@@ -20,6 +20,8 @@ from general import views as general_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from prediction_price import views as predict_views
+from data_loader import views as data_views
 
 
 urlpatterns = [
@@ -48,6 +50,12 @@ urlpatterns = [
     path('delete-account/', user_views.delete_user, name='erase-user'),
 
     path('profile-info/', user_views.tweak_profile , name='profile'),
+
+    path('property_analysis/', predict_views.calculate_price , name='price-prediction'),
+    path('property_analysis/<int:pk>/', predict_views.calculate_price , name='price-prediction'),
+    path('prediction_result/', predict_views.present_result, name='prediction-result'),
+
+    path('load_data/', data_views.inject_data, name='make_injection'),
 ]
 
 

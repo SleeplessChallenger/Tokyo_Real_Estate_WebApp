@@ -54,7 +54,6 @@ class DataInjection:
 
 
 	def process_data(self):
-		print(self.df.iloc[4, :])
 		for idx in self.indicies:
 			data = {}
 			dict_data = self.df.iloc[idx, :].to_dict()
@@ -90,14 +89,6 @@ class DataInjection:
 				title=choice(self.various_titles)
 			)
 
-
-			# 	self.model.correct_column = value
-
-			# self.model.authour = self.user
-			# self.model.date_created = datetime.now()
-			# self.model.title = choice(self.various_titles)
-
-			# self.model.objects.create
 
 	def _get_numbers(self, lower=2, upper=400000, step=10000):
 		all_numbers = []

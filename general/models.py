@@ -15,17 +15,17 @@ class PropertyClass(models.Model):
 	# numerical at first
 	time_to_station = models.IntegerField()
 	building_year = models.IntegerField()
-	coverage_ratio = models.FloatField()
-	floor_ratio = models.FloatField()
+	coverage_ratio = models.IntegerField()
+	floor_ratio = models.IntegerField()
 
 	# categorical
 	property_type = models.CharField(max_length=150)
-	municipality = models.CharField(max_length=30)
-	district = models.CharField(max_length=30)
-	nearest_station = models.CharField(max_length=35)
-	structure = models.CharField(max_length=10)
-	use = models.CharField(max_length=10)
-	city_planning = models.CharField(max_length=25)
+	municipality = models.CharField(max_length=300)
+	district = models.CharField(max_length=300)
+	nearest_station = models.CharField(max_length=350)
+	structure = models.CharField(max_length=100)
+	use = models.CharField(max_length=100)
+	city_planning = models.CharField(max_length=250)
 	municipality_code = models.IntegerField()
 	# omit age in form, but use in prediction
 	age = models.IntegerField()
@@ -33,9 +33,9 @@ class PropertyClass(models.Model):
 	# further info
 	price = models.BigIntegerField()
 	image = models.ImageField(upload_to='propery_photo', default='default_property.jpg')
-	title = models.CharField(max_length=100)
+	title = models.CharField(max_length=1000)
 	date_created = models.DateTimeField(default=timezone.now)
-	author = models.ForeignKey(User, on_delete=models.CASCADE, default = "")
+	author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 	def __str__(self):

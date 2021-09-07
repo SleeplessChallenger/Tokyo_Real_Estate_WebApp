@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'prediction_price.apps.PredictionPriceConfig',
     'data_loader.apps.DataLoaderConfig',
     'crispy_forms',
     'users.apps.UsersConfig',
