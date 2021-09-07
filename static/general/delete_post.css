@@ -1,0 +1,24 @@
+body{
+    background:#f3c538;
+}
+
+.forget-password .panel-body{
+	margin-top: 10%;
+    padding: 1%;
+    margin-bottom: 10%;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* adds slight shadow behind the box*/
+}
+
+.graffiti {
+	width: 70vw;
+    height: 50vh;
+    border-radius: 20%;
+
+}
+
+.text-center {
+	margin-top: 5vw;
+}

@@ -20,7 +20,6 @@ from general import views as general_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from data_loader import views as data_views
 
 
 urlpatterns = [
@@ -49,9 +48,7 @@ urlpatterns = [
     path('delete-account/', user_views.delete_user, name='erase-user'),
 
     path('profile-info/', user_views.tweak_profile , name='profile'),
-    path('load_data/', data_views.inject_data, name='make_injection')
 ]
-
 
 
 if settings.DEBUG:

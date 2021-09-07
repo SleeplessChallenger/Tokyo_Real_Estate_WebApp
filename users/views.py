@@ -22,7 +22,8 @@ def register(request):
 		form = UserRegistration()
 
 	context = {
-		'form': form
+		'form': form,
+		'title': 'アカウントの作成'
 	}
 
 	return render(request, 'users/register.html', context)
@@ -53,8 +54,8 @@ def display_users(request):
 
 	context = {
 		'b_form': b_form,
-		'users': users
-
+		'users': users,
+		'title': '全部のユーザー'
 	}
 
 	return render(request, 'users/all_users.html', context)
@@ -79,7 +80,8 @@ def tweak_profile(request):
 
 	context = {
 		'u_form': u_from,
-		'p_form': p_form
+		'p_form': p_form,
+		'title': 'アカウントの変化'
 	}
 
 	return render(request, 'users/profile_page.html', context)
@@ -100,7 +102,8 @@ def delete_user(request):
 		d_form = UserDelete(instance=request.user)
 
 	context = {
-		'd_form': d_form
+		'd_form': d_form,
+		'title': 'アカウントの削減'
 	}
 
 	return render(request, 'users/delete_account.html', context)

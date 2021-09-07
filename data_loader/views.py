@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from general.models import PropertyClass
 from django.contrib import messages
+from .injection_class import DataInjection
+
 
 
 def inject_data(request):
@@ -10,8 +12,12 @@ def inject_data(request):
 			return redirect('all_info')
 		else:
 			# initiate class and do all the stuff
+			data_load = DataInjection(request.user, PropertyClass.objects)
+			data_load.process_data()
+
 			messages.success(request, 'Data has been injected')
 			return redirect('all_info')
 
 	else:
-		return render(request, 'data_loader/make_load.html')
+		return render(request, 'data_loader/make_load.html',
+				{'title': 'データの入力'})

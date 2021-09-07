@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .views import (PostCreateView, PostDetailView, PostListView,
 	PostUserView, PostUpdateView, PostDeleteView)
+from data_loader import views as data_views
 
 
 urlpatterns = [
@@ -14,5 +15,6 @@ urlpatterns = [
 	path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
 	path('property_analysis/', views.calculate_price , name='price-prediction'),
 	path('property_analysis/<int:pk>/', views.calculate_price , name='price-prediction'),
-	path('prediction_result/', views.present_result, name='prediction-result')
+	path('prediction_result/', views.present_result, name='prediction-result'),
+	path('load_data/', data_views.inject_data, name='make_injection')
 ]

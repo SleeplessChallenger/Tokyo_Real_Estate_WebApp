@@ -1,9 +1,8 @@
 import zipfile
 import pandas as pd
+import numpy as np
 from datetime import datetime
 from random import randint, choice
-
-# allow user to choose upper/lower/step i.e create separate page they can load in data
 
 
 class DataInjection:
@@ -16,7 +15,6 @@ class DataInjection:
 	same features is pushed
 	'''
 
-	# self.request.user
 	def __init__(self, curr_user, model):
 		self.user = curr_user
 		self.various_titles = ['Tokyo Harajuku apartment', 'Nagasaki coast house']
@@ -46,21 +44,60 @@ class DataInjection:
 			'tradeprice': 'price'
 		}
 
+	@property
+	def model(self):
+		return self._model
+
+	@model.setter
+	def model(self, instance):
+		self._model = instance
+
 
 	def process_data(self):
+		print(self.df.iloc[4, :])
 		for idx in self.indicies:
+			data = {}
 			dict_data = self.df.iloc[idx, :].to_dict()
-			for key, value in dict_data:
+			for key, value in dict_data.items():
 				if key == 'prefecture' or key == 'frontageisgreaterflag':
 					continue
 				
 				correct_column = self.mapped_columns[key]
-				self.model.correct_column = value
+				'''
+				transform from numpy type to python native
+				'''
+				if type(value) != str:
+					value = value.item()
 
-			self.model.authour = self.user
-			self.model.date_created = datetime.now()
-			self.model.title = choice(self.various_titles)
-			self.model.save()
+				data[correct_column] = value
+
+			self.model.create(
+				time_to_station=data['time_to_station'],
+				building_year=data['building_year'],
+				coverage_ratio=data['coverage_ratio'],
+				floor_ratio=data['floor_ratio'],
+				property_type=data['property_type'],
+				municipality=data['municipality'],
+				district=data['district'],
+				nearest_station=data['nearest_station'],
+				structure=data['structure'],
+				use=data['use'],
+				city_planning=data['city_planning'],
+				municipality_code=data['municipality_code'],
+				age=data['age'],
+				price=data['price'],
+				author=self.user,
+				title=choice(self.various_titles)
+			)
+
+
+			# 	self.model.correct_column = value
+
+			# self.model.authour = self.user
+			# self.model.date_created = datetime.now()
+			# self.model.title = choice(self.various_titles)
+
+			# self.model.objects.create
 
 	def _get_numbers(self, lower=2, upper=400000, step=10000):
 		all_numbers = []

@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,17 +16,23 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+
+    {% if title %}
+        <title>東京の不動産 - {{ title }}</title>
+    {% else %}
+        <title>東京の不動産</title>
+    {% endif %}
+
+
 	
 	{% block extrahead %}
 
 
 	{% endblock %}
 
-	{% if title %}
-		<title>東京の不動産 - {{ title }}</title>
-	{% else %}
-		<title>東京の不動産</title>
-	{% endif %}
+
 </head>
 
 <body>
@@ -53,6 +60,7 @@
                     <a href="#" class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Additional actions</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a href="{% url 'price-prediction' %}" class="dropdown-item">Calculate approximate price</a>
+                        <a href="{% url 'make_injection' %}" class="dropdown-item">Load data to Properties</a>
 
                         {% if user.is_authenticated %}
                         	<a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
