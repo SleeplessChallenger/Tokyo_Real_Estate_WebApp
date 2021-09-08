@@ -1,6 +1,18 @@
-<h2>Price prediction project</h2>
+**Under development**
 
-In this project I've done a model to predict possible price of the real estate in Tokyo city.
+<h2>Full-Stack Django app with ML prediction feature</h2>
+
+In this project I'm doing a Web-app with ML
+
+<h3>Features</h3>
+
+<ul>
+  <li>CRUD for account & posts</li>
+  <li>Custom data loader from pandas</li>
+  <li>2 ML models to predict price from prefilled or bare form</li>
+ </ul>
+
+<h3>Further description</h3>
 
 1. Data
 <ul>
