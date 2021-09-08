@@ -1,13 +1,22 @@
 from django.shortcuts import render
 from django.contrib import messages
-from .prediction_interface import RegressionInterface, DecisionTreeInterface
+from .prediction_interface import RegressionInterface, DecisionTreeInterface, MainInterface
 from .forms import PricePredictionForm
 from django.shortcuts import render, redirect, get_object_or_404
 from general.models import PropertyClass
 
 
-first_model = RegressionInterface()
-second_model = DecisionTreeInterface()
+model1 = RegressionInterface()
+model2 = DecisionTreeInterface()
+main_interface = MainInterface(model1, model2)
+'''
+1.Abstraction class for model1 and model2 ensures that 
+required methods are realized, if not -> error.
+
+2. Interface is written here as we can easily add/remove
+new models (in `MainInterface` there is *args => can add
+new objects easily)
+'''
 
 
 def calculate_price(request, pk=''):
@@ -17,18 +26,12 @@ def calculate_price(request, pk=''):
 	'''
 	if request.method == 'POST':
 		p_form = PricePredictionForm(request.POST)
-		print(p_form)
 		if p_form.is_valid():
 			json_data = [p_form.cleaned_data]
 
-			prediction_one = first_model.make_prediction(json_data)
-			prediction_two = second_model.make_prediction(json_data)
-			# print(prediction_one)
-			# print(prediction_two)
-			best_result = prediction_one if prediction_one > prediction_two\
-				else prediction_two
+			predicted_data = make_prediction(json_data)
 
-			request.session['prediction'] = best_result
+			request.session['predicted_data'] = predicted_data
 			return redirect('prediction-result')
 	else:
 		if pk:
@@ -52,11 +55,16 @@ def calculate_price(request, pk=''):
 
 			return render(request, 'prediction_price/price_prediction.html', context)
 
+def make_prediction(data):
+	return main_interface(data)
+
 def present_result(request):
-	retrieved_data = request.session.get('prediction', None)
+	retrieved_data = request.session.get('predicted_data', None)
+	price_one, price_two = retrieved_data
 	if retrieved_data:
 		context = {
-			'price': retrieved_data,
+			'price1': price_one,
+			'price2': price_two,
 			'title': '予測の結果'
 		}
 

@@ -3,13 +3,23 @@ import pickle
 from .prediction_model import Regression
 
 
+class MainInterface:
+	def __init__(self, *args):
+		self.args = args
+		self.result = []
+
+	def __call__(self, data):
+		for arg in self.args:
+			self.result.append(arg.make_prediction(data))
+
+		return self.result
+
+
 class AbstractModels(ABC):
 	@abstractmethod
 	def make_prediction(self, data):
 		raise NotImplementedError("Method isn't realized")
 
-# one class with 2 compositions of those below
-# that are initieated 
 
 class RegressionInterface(AbstractModels):
 	def __init__(self):
