@@ -139,3 +139,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'start-page'
 LOGIN_URL = 'login'
+
+# SESSION_SAVE_EVERY_REQUEST = True

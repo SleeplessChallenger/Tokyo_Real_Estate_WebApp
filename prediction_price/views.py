@@ -18,6 +18,7 @@ new models (in `MainInterface` there is *args => can add
 new objects easily)
 '''
 
+# session.flush() after logout
 
 def calculate_price(request, pk=''):
 	'''
@@ -31,7 +32,10 @@ def calculate_price(request, pk=''):
 
 			predicted_data = make_prediction(json_data)
 
-			request.session['predicted_data'] = predicted_data
+			if clean_session(request):
+				del request.session['data']
+
+			request.session['data'] = predicted_data
 			return redirect('prediction-result')
 	else:
 		if pk:
@@ -58,20 +62,25 @@ def calculate_price(request, pk=''):
 def make_prediction(data):
 	return main_interface(data)
 
+def clean_session(request):
+	return 'data' in request.session
+
 def present_result(request):	
-	if 'predicted_data' in request.session:
-		retrieved_data = request.session.get('predicted_data')
+	if 'data' in request.session:
+		retrieved_data = request.session.get('data')
+
+		if clean_session(request):
+			del request.session['data']
+
 		price_one, price_two = retrieved_data
 
 		context = {
-			'price1': round(price_one,2),
-			'price2': round(price_two,2),
+			'price1': round(price_one, 2),
+			'price2': round(price_two, 2),
 			'title': '予測の結果'
 		}
 
 		messages.success(request, 'Price has been predicted successfully!')
-
-		del request.session['predicted_data']
 
 		return render(request, 'prediction_price/prediction_result.html', context)
 

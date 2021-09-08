@@ -4,15 +4,20 @@ from .prediction_model import Regression
 
 
 class MainInterface:
+	'''
+	move `result = []` away from init
+	as otherwise values will be stored
+	there
+	'''
 	def __init__(self, *args):
 		self.args = args
-		self.result = []
 
 	def __call__(self, data):
+		result = []
 		for arg in self.args:
-			self.result.append(arg.make_prediction(data))
+			result.append(arg.make_prediction(data))
 
-		return self.result
+		return result
 
 
 class AbstractModels(ABC):
