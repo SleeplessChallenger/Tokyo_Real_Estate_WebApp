@@ -58,18 +58,21 @@ def calculate_price(request, pk=''):
 def make_prediction(data):
 	return main_interface(data)
 
-def present_result(request):
-	retrieved_data = request.session.get('predicted_data', None)
-	price_one, price_two = retrieved_data
-	if retrieved_data:
+def present_result(request):	
+	if 'predicted_data' in request.session:
+		retrieved_data = request.session.get('predicted_data')
+		price_one, price_two = retrieved_data
+
 		context = {
-			'price1': price_one,
-			'price2': price_two,
+			'price1': round(price_one,2),
+			'price2': round(price_two,2),
 			'title': '予測の結果'
 		}
 
 		messages.success(request, 'Price has been predicted successfully!')
-		# request.session.flush()
+
+		del request.session['predicted_data']
+
 		return render(request, 'prediction_price/prediction_result.html', context)
 
 	messages.warning(request, f"No prediction is found. Try again")
