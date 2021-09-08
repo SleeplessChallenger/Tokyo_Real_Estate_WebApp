@@ -29,7 +29,6 @@ def calculate_price(request, pk=''):
 		p_form = PricePredictionForm(request.POST)
 		if p_form.is_valid():
 			json_data = [p_form.cleaned_data]
-
 			predicted_data = make_prediction(json_data)
 
 			if clean_session(request):
@@ -60,7 +59,6 @@ def calculate_price(request, pk=''):
 			return render(request, 'prediction_price/price_prediction.html', context)
 
 def make_prediction(data):
-	print('before', data)
 	return main_interface(data)
 
 def clean_session(request):
@@ -76,8 +74,8 @@ def present_result(request):
 		price_one, price_two = retrieved_data
 
 		context = {
-			'price1': round(price_one, 2),
-			'price2': round(price_two, 2),
+			'price1': round(price_one, 4),
+			'price2': round(price_two, 4),
 			'title': '予測の結果'
 		}
 
