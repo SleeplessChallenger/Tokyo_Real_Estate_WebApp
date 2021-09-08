@@ -18,7 +18,6 @@ new models (in `MainInterface` there is *args => can add
 new objects easily)
 '''
 
-# session.flush() after logout
 
 def calculate_price(request, pk=''):
 	'''
@@ -73,9 +72,12 @@ def present_result(request):
 
 		price_one, price_two = retrieved_data
 
+		lower_bound = min(price_one, price_two)
+		upper_bound = max(price_one, price_two)
+
 		context = {
-			'price1': round(price_one, 4),
-			'price2': round(price_two, 4),
+			'price_low': round(lower_bound, 4),
+			'price_high': round(upper_bound, 4),
 			'title': '予測の結果'
 		}
 

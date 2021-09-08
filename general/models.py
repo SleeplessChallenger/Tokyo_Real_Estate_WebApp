@@ -56,7 +56,7 @@ class PropertyClass(models.Model):
 		super().save(*args, **kwargs)
 
 		image = Image.open(self.image.path)
-		if image.height > 500 or image.width > 500:
-			desired_size = (500, 500)
+		if image.height > 800 or image.width > 800:
+			desired_size = (800, 800)
 			image.thumbnail(desired_size)
 			image.save(self.image.path)

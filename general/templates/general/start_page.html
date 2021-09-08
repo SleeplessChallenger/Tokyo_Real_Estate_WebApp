@@ -88,7 +88,48 @@
     	{% endfor %}
     {% endif %}
 
+
 	{% block content %}
+
+<main role="main" class="container">
+    <article class='welcome'>
+        <p class='jap_phrase'>よろしくお願いします！</p>
+    </article>
+
+    <articel class='start_info'>
+        <p>Additional info</p>
+        <ul>
+            <li>Find my contacts in the footer</li>
+            <li>Feel free to provide feedback</li>
+        </ul>
+    </article>
+
+
+
+    <div class='image_bar'>
+        <img src="{% static 'general/pages_img/sunflower.jpg' %}">
+
+        <div class="col-md-4" id='main_nav'>
+
+          <div class="content-section">
+            <h3 class='observe' >Observe options</h3>
+            <p class='text-muted'>Be free to choose between features below
+
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light"><a class='options' href="{% url 'register-newcomer' %}">Join Us!</a></li>
+                <li class="list-group-item list-group-item-light"><a class='options' href="{% url 'login' %}">Log In!</a></li>
+                <li class="list-group-item list-group-item-light"><a class='options' href="{% url 'price-prediction' %}">Predict price</a></li>
+                <li class="list-group-item list-group-item-light"><a class='options' href="{% url 'all_info' %}">Look at existing property</a></li>
+              </ul>
+
+            </p>
+          </div>
+        </div>
+
+    </div>
+
+</main>
+
 
 	{% endblock %}
 

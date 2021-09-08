@@ -1,0 +1,14 @@
+.price_show {
+	margin: 3rem;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: space-between;
+}
+
+.price_lower, .price_upper {
+	padding: 1rem;
+	border: 10px solid black;
+	background-color: #fca311;
+
+}

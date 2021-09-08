@@ -1,15 +1,25 @@
 {% extends 'general/start_page.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
-{% block extrahead %}
 
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static 'prediction_price/price_result.css' %}">
 
 {% endblock extrahead %}
 
 {% block content %}
 
-{{ price1 }}
-{{ price2 }}
+<div class='price_show'>
 
+	<div class='price_lower'>
+		<p>Here is the lower bound of such property</p>
+		{{ price_low }}
+	</div>
+
+	<div class='price_upper'>
+		<p>And here is the upper bound</p>
+	{{ price_high }}
+	</div>
+
+</div>
 
 {% endblock content %}

@@ -1,6 +1,6 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 section {
-    padding: 60px 0;
+    padding-top: 60px;
 }
 
 #footer {
@@ -66,3 +66,65 @@ section {
     margin-bottom: 10px;
 }
 }
+
+/*Home page*/
+
+#main_nav {
+	margin: 3rem;
+	display: flex;
+	margin-left: auto;
+}
+
+.image_bar {
+	display: flex;
+	justify-content: space-around;
+}
+
+img {
+	border-radius: 15%;
+	margin: 1rem;
+}
+
+.options {
+	text-decoration: none;
+	color: black;
+}
+
+.options:hover {
+	color: green;
+}
+
+.content-section {
+	border: 3px black solid;
+	border-radius: 3%;
+}
+
+.content-section:hover {
+	box-shadow: 20px 7px 5px #cdb4db;
+}
+
+.text-muted, .observe {
+	margin: 1rem;
+}
+
+.welcome {
+	margin: 3rem;
+	box-shadow: 15px 8px 7px #f9c74f;
+	background-color: #ddbea9;
+	border-radius: 10%;
+	width: 40vw;
+}
+
+.jap_phrase {
+	font-size: 3rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.start_info {
+	background-color: red;
+}
+
+
+
+

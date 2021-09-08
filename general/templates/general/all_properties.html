@@ -44,9 +44,7 @@
 
 		<div class = "post">
 
-			{% if post.image %}
 				<img class = "not" src ="{{ post.image.url }}">
-			{% endif %}
 
 			<p class = "caption"> <small class='title_only' >{{ post }} </small><a class='link_class' href ="{% url 'post-info' post.id %}"> <br>
 
