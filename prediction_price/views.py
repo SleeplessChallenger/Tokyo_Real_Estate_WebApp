@@ -60,6 +60,7 @@ def calculate_price(request, pk=''):
 			return render(request, 'prediction_price/price_prediction.html', context)
 
 def make_prediction(data):
+	print('before', data)
 	return main_interface(data)
 
 def clean_session(request):

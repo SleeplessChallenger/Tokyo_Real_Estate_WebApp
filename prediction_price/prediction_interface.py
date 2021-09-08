@@ -33,16 +33,17 @@ class RegressionInterface(AbstractModels):
 		self.regression = Regression()
 
 	def _get_dv(self):
-		with open('regression_model.bin', 'rb') as md:
+		with open('ML_models/regression_model.bin', 'rb') as md:
 			dv = pickle.load(md)[0]
 		return dv
 
 	def _get_model(self):
-		with open('regression_model.bin', 'rb') as md:
+		with open('ML_models/regression_model.bin', 'rb') as md:
 			model = pickle.load(md)[1]
 		return model
 
 	def make_prediction(self, data):
+		print('models', data)
 		return self.regression.predict_result(self.dv, self.model, data)
 
 
@@ -53,14 +54,15 @@ class DecisionTreeInterface(AbstractModels):
 		self.regression = Regression()
 
 	def _get_dv(self):
-		with open('decision_tree_model.bin', 'rb') as md:
+		with open('ML_models/decision_tree_model.bin', 'rb') as md:
 			dv = pickle.load(md)[0]
 		return dv
 
 	def _get_model(self):
-		with open('decision_tree_model.bin', 'rb') as md:
+		with open('ML_models/decision_tree_model.bin', 'rb') as md:
 			model = pickle.load(md)[1]
 		return model
 	
 	def make_prediction(self, data):
+		print('models', data)
 		return self.regression.predict_result(self.dv, self.model, data)
