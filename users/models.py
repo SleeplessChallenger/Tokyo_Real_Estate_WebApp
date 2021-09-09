@@ -13,8 +13,6 @@ class Profile(models.Model):
 	can_add_posts = models.BooleanField(default=False)
 
 
-	# def __str__(self):
-	# 	return f"{self.first_name[0]}. {self.last_name}"
 	def __str__(self):
 		return self.user.username
 

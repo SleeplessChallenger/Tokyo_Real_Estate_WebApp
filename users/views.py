@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from .forms import (FlipAccess, UserRegistration, UserChange,
+from .forms import (GiveRights, UserRegistration, UserChange,
 	ProfileChange, UserDelete)
 from .decorators import special_user, login_required_message
 from django.contrib.auth.decorators import login_required
@@ -36,29 +36,31 @@ to give messages
 @special_user
 @login_required
 def display_users(request):
-	User = get_user_model()
-	users = User.objects.filter(is_staff=False).filter(is_superuser=False).all()
+	pass
+	# User = get_user_model()
+	# users = User.objects.filter(is_staff=False).filter(is_superuser=False).all()
 
-	if request.method == 'POST':
-		b_form = FlipAccess(request.POST, instance=request.user.profile)
-		if b_form.is_valid():
-			print(b_form.cleaned_data)
-			# the one who makes request isn't the user who we change the value of		
-			b_form.save()
+	# if request.method == 'POST':
+	# 	b_form = GiveRights(request.POST, instance=request.user.profile)
+	# 	print(b_form)
+	# 	if b_form.is_valid():
+	# 		print(b_form.cleaned_data)
+	# 		# the one who makes request isn't the user who we change the value of		
+	# 		b_form.save()
 			
 
-			return redirect('start-page')
+	# 		return redirect('start-page')
 
-	else:
-		b_form = FlipAccess(instance=request.user.profile)
+	# else:
+	# 	b_form = GiveRights(instance=request.user.profile)
 
-	context = {
-		'b_form': b_form,
-		'users': users,
-		'title': '全部のユーザー'
-	}
+	# context = {
+	# 	'b_form': b_form,
+	# 	'users': users,
+	# 	'title': '全部のユーザー'
+	# }
 
-	return render(request, 'users/all_users.html', context)
+	# return render(request, 'users/all_users.html', context)
 
 @login_required_message
 @login_required

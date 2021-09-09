@@ -12,13 +12,16 @@ class UserRegistration(UserCreationForm):
 		fields = ['username', 'email', 'password1', 'password2']
 
 
-class FlipAccess(forms.ModelForm):
-	can_add_posts = forms.BooleanField(required=False, initial=False)
-
+class GiveRights(forms.ModelForm):
+	can_add_posts = forms.ChoiceField(
+		widget=forms.RadioSelect,
+		choices=[(True, 'Give right'), (False, 'Remove right')],
+		required=True
+	)
 
 	class Meta:
 		model = Profile
-		fields = ['can_add_posts', 'country']
+		fields = ['can_add_posts']
 
 
 class UserChange(forms.ModelForm):

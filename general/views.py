@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import PropertyClass
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -11,8 +11,6 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import ImageUpload
 from django.contrib.messages.views import SuccessMessageMixin
-
-
 
 '''
 create & update will redirect to 'all_info'
@@ -104,13 +102,13 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 	success_url = '/all_properties'
 	template_name = 'general/delete_post.html'
 	# to redirect after post is deleted
-	success_message = '%(title) was deleted'
+	success_message = "%(title) was deleted"
 	title = 'ポストの削減'
 
 	def get_success_message(self, cleaned_data):
 		return self.success_message % dict(
 			cleaned_data,
-			title=self.object.title
+			title=self.object.title,
 		)
 
 	def test_func(self):
@@ -121,3 +119,39 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 		if post.author == self.request.user:
 			return True
 		return False
+
+
+# add layer of security
+class PostDeleteAll(LoginRequiredMixin, SuccessMessageMixin, TitleMixin, ListView):
+	model = PropertyClass
+	template_name = 'general/delete_all_posts.html'
+	success_message = '%(title) was deleted'
+	title = '全部のポストの削減'
+	context_object_name = 'posts'
+	paginate_by = 8
+	success_url = '/all_properties'
+
+
+	def get_success_message(self, cleaned_data):
+		return self.success_message % dict(
+			cleaned_data,
+			title=self.object.title,
+		)
+
+	def get_queryset(self):
+		user = get_object_or_404(User, username=self.kwargs.get('username'))
+		return PropertyClass.objects.filter(author=user).order_by('-date_created')
+
+
+	def post(self, request, *args, **kwargs):
+		data = dict(request.POST)['checkedbox']
+		result = list(map(int, data))
+		for i in result:
+			#post = self.model.objects.get(pk=i)
+			post = self.model.objects.filter(pk=i)
+			# if post.author != request.user:
+
+			# else:
+			post.delete()
+
+		return redirect(self.success_url)
