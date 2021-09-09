@@ -68,16 +68,21 @@ section {
 }
 
 /*Home page*/
+body {
+	background-color: #ffd5c2;
+}
+
+
+.image_bar {
+	display: flex;
+	justify-content: space-around;
+}
 
 #main_nav {
 	margin: 3rem;
 	display: flex;
 	margin-left: auto;
-}
 
-.image_bar {
-	display: flex;
-	justify-content: space-around;
 }
 
 img {
@@ -100,7 +105,7 @@ img {
 }
 
 .content-section:hover {
-	box-shadow: 20px 7px 5px #cdb4db;
+	box-shadow: 20px 7px 5px #9d4edd;
 }
 
 .text-muted, .observe {
@@ -110,7 +115,7 @@ img {
 .welcome {
 	margin: 3rem;
 	box-shadow: 15px 8px 7px #f9c74f;
-	background-color: #ddbea9;
+	background-color: #6d597a;
 	border-radius: 10%;
 	width: 40vw;
 }
@@ -122,9 +127,13 @@ img {
 }
 
 .start_info {
-	background-color: red;
+	background-color: #abc4ff;
+	border-radius: 10%;
+	width: 20vw;
 }
 
-
+.main_name, .child_names {
+	margin: 1rem;
+}
 
 
