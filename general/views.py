@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from .forms import ImageUpload
 from django.contrib.messages.views import SuccessMessageMixin
 
+
 '''
 create & update will redirect to 'all_info'
 as I've specified it in the models.py
@@ -79,7 +80,7 @@ class PostUserView(TitleMixin, ListView):
 		return PropertyClass.objects.filter(author=user).order_by('-date_created')
 
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, TitleMixin, UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, TitleMixin, UpdateView):
 	model = PropertyClass
 	form_class = ImageUpload
 	template_name = 'general/update_post.html'
@@ -96,20 +97,17 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, TitleMixin, Update
 		form.instance.author = self.request.user
 		return super().form_valid(form)
 
+	def get_success_message(self, cleaned_data):
+		return 'Post was updated'
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, TitleMixin, DeleteView):
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, TitleMixin, DeleteView):
 	model = PropertyClass
+	# to redirect after post is deleted
 	success_url = '/all_properties'
 	template_name = 'general/delete_post.html'
-	# to redirect after post is deleted
-	success_message = "%(title) was deleted"
 	title = 'ポストの削減'
 
-	def get_success_message(self, cleaned_data):
-		return self.success_message % dict(
-			cleaned_data,
-			title=self.object.title,
-		)
 
 	def test_func(self):
 		'''
@@ -121,22 +119,18 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixi
 		return False
 
 
-# add layer of security
 class PostDeleteAll(LoginRequiredMixin, SuccessMessageMixin, TitleMixin, ListView):
+	'''
+	if not the owner of the post or
+	superuser/staff => won't allow to delete
+	'''
 	model = PropertyClass
 	template_name = 'general/delete_all_posts.html'
-	success_message = '%(title) was deleted'
 	title = '全部のポストの削減'
 	context_object_name = 'posts'
 	paginate_by = 8
 	success_url = '/all_properties'
 
-
-	def get_success_message(self, cleaned_data):
-		return self.success_message % dict(
-			cleaned_data,
-			title=self.object.title,
-		)
 
 	def get_queryset(self):
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
@@ -147,11 +141,13 @@ class PostDeleteAll(LoginRequiredMixin, SuccessMessageMixin, TitleMixin, ListVie
 		data = dict(request.POST)['checkedbox']
 		result = list(map(int, data))
 		for i in result:
-			#post = self.model.objects.get(pk=i)
-			post = self.model.objects.filter(pk=i)
-			# if post.author != request.user:
+			post = self.model.objects.get(pk=i)
+			if post.author != request.user or not request.user.is_staff or not request.user.is_superuser:
+				messages.warning(request, '''You cannot delete other posts unless
+you are superuser/staff''')
+				return redirect('/profile-info')
+			else:
+				post.delete()
 
-			# else:
-			post.delete()
-
+		messages.success(request, f"{', '.join([str(x) for x in result])} removed")
 		return redirect(self.success_url)
