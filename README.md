@@ -10,6 +10,7 @@ In this project I'm doing a Web-app with ML
   <li>CRUD for account & posts</li>
   <li>Custom data loader from pandas</li>
   <li>2 ML models to predict price from prefilled or bare form</li>
+  <li>Form for posts bulk delete</li>
  </ul>
 
 <h3>Further description</h3>
