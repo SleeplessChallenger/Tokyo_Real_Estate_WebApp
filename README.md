@@ -12,6 +12,16 @@ In this project I'm doing a Web-app with ML
   <li>2 ML models to predict price from prefilled or bare form</li>
   <li>Form for posts bulk delete</li>
  </ul>
+ 
+<h3>Structure</h3>
+
+1. `general` is the base folder that has base template and code to handle CRUD for posts
+2. `users` has CRUD for users with signals to create <ins>Profile</ins>
+3. `prediction_price` has code to enable prediction and here deployed <ins>ML models</ins> <br>
+are implemented via Interface and Composition
+4. `data_loader` is a folder with mine-created tool to load data from Pandas into the model
+5. `ML_models` is a folder where you can find notebooks where I did all the data preparation and machine learning
+  + there you can see datasets (only preprocessed version as original one is too large)
 
 <h3>Further description</h3>
 
