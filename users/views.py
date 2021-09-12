@@ -68,7 +68,7 @@ def tweak_profile(request):
 	if request.method == 'POST':
 		u_from = UserChange(request.POST, instance=request.user)
 		p_form = ProfileChange(request.POST, request.FILES,
-			instance=request.user.profile)
+										instance=request.user.profile)
 
 		if u_from.is_valid() and p_form.is_valid():
 			u_from.save()
