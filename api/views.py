@@ -24,7 +24,7 @@ class ProfileViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
 	permission_classes = [permissions.IsAuthenticated]
 
 
-# curl -X DELETE "http://127.0.0.1:8000/api/users/78/"
+# curl -X DELETE -u "Daniil":"Enoshima" "http://127.0.0.1:8000/api/properties/88"
 # curl -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://127.0.0.1:8000/api/users/
 # curl --header "Content-Type: application/json" --request POST --data '{"username":"Itachi", "password":"Naruto"}' http://127.0.0.1:8000/api/users/
 # curl --header "Content-Type: application/json" --request PATCH --data '{"username":"Itachi", "password":"Sasuke"}' http://127.0.0.1:8000/api/users/10
@@ -77,7 +77,9 @@ I'll stick with APIView
 				status=status.HTTP_406_NOT_ACCEPTABLE)
 
 		user = User.objects.filter(pk=pk).first()
+		#!!!! think about partial
 		serializer = self.serializer_class(user, data=request.data)
+
 		if serializer.is_valid():
 			serializer.save()
 			return Response({'message': f"{user.username} was updated"},
@@ -134,6 +136,7 @@ class PropertyViewSet(viewsets.ModelViewSet):
 				status=status.HTTP_400_BAD_REQUEST)
 
 		user = self._get_author_name(request)
+		# check here
 		if user.username != request.user.username:
 			return Response({'message': "You can't specify others as authors"})
 
@@ -153,19 +156,27 @@ class PropertyViewSet(viewsets.ModelViewSet):
 		another helper as here we must
 		specify pk/id in PATCH form of
 		post, not author
+
+		1. Invalid post id: error
+		2. if user isn't authenticated or
+			user isn't author of post AND
+			user isn't superuser: error
 		'''
 		user = self._get_author_name_2(request)
+		if not user:
+			return Response({'message': "Wrong id"},
+				status=status.HTTP_400_BAD_REQUEST)
 
 		first_check = not request.user.is_authenticated
 		second_check = user.username != request.user.username and\
 			not request.user.is_superuser
-		third_check = user.username != request.user.username
 
-		if first_check or second_check or third_check:
+		if first_check or second_check:
 			return Response({'message': "You are unable to tweak others' post"},
 				status=status.HTTP_400_BAD_REQUEST)
 
-		serializer = self.serializer_class(data=request.data)
+		serializer = self.serializer_class(data=request.data,
+			partial=True)
 		if serializer.is_valid():
 			serializer.save()
 			# partial input?
@@ -174,13 +185,32 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-	def delete(self, request, format=None):
-		user = self._get_author_name(request)
-		if not request.user.is_authenticated or\
-			user.username != request.user.username or\
-			not request.user.is_superuser:
-				return Response({'message': "You are unable to tweak others' post"},
-					status=status.HTTP_400_BAD_REQUEST)
+	def delete(self, request, format=None, pk=None):
+		'''
+		1. if invalid id: error
+		2. if user isn't authenticated or
+			user isn't author of post AND
+			user isn't superuser: error
+
+		'''
+		post = PropertyClass.objects.filter(id=pk).first()
+
+		if not post:
+			return Response({'message': "No post with such id"},
+				status=status.HTTP_400_BAD_REQUEST)
+
+		first_check = not request.user.is_authenticated
+		second_check = post.author != request.user.username and\
+			not request.user.is_superuser
+
+		if first_check or second_check:
+			return Response({'message': "You are unable to tweak others' post"},
+				status=status.HTTP_400_BAD_REQUEST)
+
+		else:
+			post.delete()
+			return Response({'message': f"{post.title} was deleted"},
+				status=status.HTTP_200_OK)
 
 	def _get_author_name(self, request):
 		author_id = request.data.get('author')
@@ -191,6 +221,6 @@ class PropertyViewSet(viewsets.ModelViewSet):
 		post_id = request.data.get('id') or\
 			request.data.get('pk')
 		post = PropertyClass.objects.filter(pk=post_id).first()
+		if not post:
+			return False
 		return post.author
-
-
