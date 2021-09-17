@@ -15,18 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users import views as user_views
-from general import views as general_views
 from django.conf import settings
 from django.conf.urls.static import static
+
 from django.contrib.auth import views as auth_views
 from prediction_price import views as predict_views
 from data_loader import views as data_views
+from users import views as user_views
+from general import views as general_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', general_views.home, home='start'),
     path('', include('general.urls')),
     path('all-special-users/', user_views.display_users, name='show-all-users'),
     path('register/', user_views.register, name='register-newcomer'),
@@ -56,6 +56,8 @@ urlpatterns = [
     path('prediction_result/', predict_views.present_result, name='prediction-result'),
 
     path('load_data/', data_views.inject_data, name='make_injection'),
+
+    path('api/', include('api.urls')),
 ]
 
 

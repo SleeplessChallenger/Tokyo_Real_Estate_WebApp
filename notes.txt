@@ -49,6 +49,24 @@ If no data is found (I"ll remove data from cookie after it's presented as visit 
 17. To write files in img: 1. Html: src="{% static 'general/pages_img/delete_page.jpg' %}"
 2. Css: url("pages_img/profile_page.jpg")
 
+# API
 
+1. add in settings.py: 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+and in INSTALLED_APPS: 'rest_framework',
+
+2. create serializers
+3. don't forget to add apps into settings.py -> Installed apps
+
+
+4. to enable POST request from CLI, we're to create new serializer
+
+5. viewsets should be registered in router and APIView are written: as_view()
+
+6. Also, if we have ViewSet => we can directly see API in menu, but in APIView we cannot
 
 
