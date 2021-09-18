@@ -71,14 +71,14 @@ I'll stick with APIView
 
 
 	def patch(self, request, format=None):
-		pk = request.data.get('pk')
+		pk = request.data.get('pk') or request.data.get('id')
 		if not pk:
 			return Response({'message': "Cannot make patch without id"},
 				status=status.HTTP_406_NOT_ACCEPTABLE)
 
 		user = User.objects.filter(pk=pk).first()
-		#!!!! think about partial
-		serializer = self.serializer_class(user, data=request.data)
+		serializer = self.serializer_class(user, data=request.data,
+			partial=True)
 
 		if serializer.is_valid():
 			serializer.save()
@@ -131,13 +131,23 @@ class PropertyViewSet(viewsets.ModelViewSet):
 				status=status.HTTP_200_OK)
 
 	def post(self, request, format=None):
+		'''
+		1. if user isn't authorized: error
+		2. if author != current user AND 
+			user isn't super or user isn't super:
+			error
+		'''
 		if not request.user.is_authenticated:
 			return Response({'message': 'Only author/admin can add posts'},
 				status=status.HTTP_400_BAD_REQUEST)
 
 		user = self._get_author_name(request)
-		# check here
-		if user.username != request.user.username:
+
+		first_check = user.username != request.user.username and\
+			not request.user.is_superuser
+		second_check = not request.user.is_superuser
+
+		if first_check or second_check:
 			return Response({'message': "You can't specify others as authors"})
 
 		serializer = self.serializer_class(data=request.data)
@@ -161,8 +171,12 @@ class PropertyViewSet(viewsets.ModelViewSet):
 		2. if user isn't authenticated or
 			user isn't author of post AND
 			user isn't superuser: error
+
+		3. if everything is OK: save partial
+			input and return message
 		'''
 		user = self._get_author_name_2(request)
+		# if id/pk isn't provided: error will be triggered
 		if not user:
 			return Response({'message': "Wrong id"},
 				status=status.HTTP_400_BAD_REQUEST)
@@ -175,16 +189,19 @@ class PropertyViewSet(viewsets.ModelViewSet):
 			return Response({'message': "You are unable to tweak others' post"},
 				status=status.HTTP_400_BAD_REQUEST)
 
-		serializer = self.serializer_class(data=request.data,
-			partial=True)
+		post_pk = request.data.get('id') or request.data.get('pk')
+		post = PropertyClass.objects.filter(pk=post_pk).first()
+
+		serializer = self.serializer_class(post, data=request.data, partial=True)
+
 		if serializer.is_valid():
 			serializer.save()
-			# partial input?
-			return Response({"message": f"{serializer.title} was updated!"},
+			return Response({"message": f"{post.title} was updated!"},
 				status=status.HTTP_202_ACCEPTED)
 
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+	# if you want to delete via curl: use -u
 	def delete(self, request, format=None, pk=None):
 		'''
 		1. if invalid id: error
