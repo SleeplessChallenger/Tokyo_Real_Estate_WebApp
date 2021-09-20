@@ -148,7 +148,8 @@ class PropertyViewSet(viewsets.ModelViewSet):
 		second_check = not request.user.is_superuser
 
 		if first_check or second_check:
-			return Response({'message': "You can't specify others as authors"})
+			return Response(
+				{'message': "You can't specify others as authors unless you're admin"})
 
 		serializer = self.serializer_class(data=request.data)
 
@@ -186,7 +187,8 @@ class PropertyViewSet(viewsets.ModelViewSet):
 			not request.user.is_superuser
 
 		if first_check or second_check:
-			return Response({'message': "You are unable to tweak others' post"},
+			return Response(
+				{'message': "You are unable to tweak others' post unless you're admin"},
 				status=status.HTTP_400_BAD_REQUEST)
 
 		post_pk = request.data.get('id') or request.data.get('pk')
@@ -221,7 +223,8 @@ class PropertyViewSet(viewsets.ModelViewSet):
 			not request.user.is_superuser
 
 		if first_check or second_check:
-			return Response({'message': "You are unable to tweak others' post"},
+			return Response(
+				{'message': "You are unable to tweak others' post unless you're admin"},
 				status=status.HTTP_400_BAD_REQUEST)
 
 		else:
