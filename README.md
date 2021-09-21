@@ -11,6 +11,8 @@ In this project I'm doing a Web-app with ML
   <li>Custom data loader from pandas</li>
   <li>2 ML models to predict price from prefilled or bare form</li>
   <li>Form for posts bulk delete</li>
+  <li>APIs to get various JSON data</li>
+  <li>Unit tests to improve quality</li>
  </ul>
  
 <h3>Structure</h3>
