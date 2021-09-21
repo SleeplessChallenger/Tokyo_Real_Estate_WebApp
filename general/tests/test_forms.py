@@ -36,26 +36,5 @@ class FormsTestCase(TestCase):
 		form = ImageUpload(data=form_data)
 		self.assertTrue(form.is_valid())
 
-	def test_error(self):
-		form_data = {
-			'time_to_station': 3,
-			'building_year': 2015,
-			'coverage_ratio': 105,
-			'floor_ratio': 90,
-			'property_type': 'house',
-			'municipality': 'minamiyukigaya',
-			'district': 'ota_ward',
-			'nearest_station': 'Shinagawa',
-			'structure': 'rc',
-			'use': 'house',
-			'city_planning': 'house', 
-			'municipality_code': 3453,
-			'price': 545,
-			'age': '6',
-			'image': 'some.jpg'
-		}
-
-		form = ImageUpload(data=form_data)
-		# print(form.errors)
-		# self.assertTrue(form.is_valid())
-		#self.assertEquals(form.errors['age'], [''])
+		form = ImageUpload(data={})
+		self.assertFalse(form.is_valid())
