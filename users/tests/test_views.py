@@ -73,7 +73,6 @@ class UserTestCase(TestCase):
 		user = get_user_model().objects.all()
 		self.assertEquals(user[0].username, 'イタチ_ウチハ')
 
-
 	def test_logout(self):
 		self._regsiter_login()
 		url = reverse('logout')

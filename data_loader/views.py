@@ -4,7 +4,6 @@ from django.contrib import messages
 from .injection_class import DataInjection
 
 
-
 def inject_data(request):
 	if request.method == 'POST':
 		if not request.user.is_staff or not request.user.is_superuser:

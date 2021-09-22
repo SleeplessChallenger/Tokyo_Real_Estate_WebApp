@@ -11,7 +11,7 @@ class DataInjection:
 	created class with tight coupling to
 	action in views.py as dataset will be the same
 	and columns are transformed in the same fashion.
-	But I do allow to swap model if the another name, but with
+	But I do allow to swap model if with another name, but with
 	same features is pushed
 	'''
 

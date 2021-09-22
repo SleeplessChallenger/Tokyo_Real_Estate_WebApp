@@ -173,7 +173,3 @@ class PropertyTestCase(TestCase):
 		response_code = response.redirect_chain[0][1]
 		self.assertEquals(response_code, 302)
 		self.assertEquals(response_url, '/')
-
-
-
-
