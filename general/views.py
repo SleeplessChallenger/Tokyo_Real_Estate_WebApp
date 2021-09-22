@@ -136,8 +136,11 @@ class PostDeleteAll(LoginRequiredMixin, SuccessMessageMixin, TitleMixin, ListVie
 		user = get_object_or_404(User, username=self.kwargs.get('username'))
 		return PropertyClass.objects.filter(author=user).order_by('-date_created')
 
-
 	def post(self, request, *args, **kwargs):
+		if 'checkedbox' not in dict(request.POST):
+			messages.warning(request, "You didn't tick anything")
+			return redirect(reverse('start-page'))
+
 		data = dict(request.POST)['checkedbox']
 		result = list(map(int, data))
 		for i in result:

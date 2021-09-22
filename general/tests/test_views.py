@@ -65,6 +65,12 @@ class PropertyTestCase(TestCase):
 			'price': 23434353
 		}
 
+		response = self.client.post(url, new_post, follow=True)
+		response_url = response.redirect_chain[0][0]
+		response_code = response.redirect_chain[0][1]
+		self.assertEquals(response_url, '/login/?next=/post/new/')
+		self.assertEquals(response_code, 302)
+
 		self.client.login(username='ナルト', password='SomePass')
 		response = self.client.post(url, new_post, follow=True)
 		response_url = response.redirect_chain[0][0]
@@ -72,6 +78,10 @@ class PropertyTestCase(TestCase):
 
 		self.assertEquals(redirect_code, 302)
 		self.assertEquals(response_url, '/all_properties')
+
+		# test db being affected
+		posts = PropertyClass.objects.all()
+		self.assertEquals(posts.count(), 2)
 
 	def test_single_post(self):
 		# non-existing
@@ -110,10 +120,15 @@ class PropertyTestCase(TestCase):
 		self.assertEquals(response.status_code, 200)
 
 	def test_register(self):
-		response = self.client.post('/register/',
-			json.dumps({'username': '新なユーザー', 'password': 'SomePass'}),
-			content_type='application/json')
-		self.assertEquals(response.status_code, 200)
+		response = self.client.post('/register/', data={
+			'username': 'サスケ',
+			'email': 'd@mail.com',
+			'password1': 'newPassword435',
+			'password2': 'newPassword435',
+			})
+		
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response.url, '/login/')
 
 	def test_logged_in(self):
 		url = reverse('user-create-post')
@@ -132,3 +147,33 @@ class PropertyTestCase(TestCase):
 		# as user is logged, no redirect
 		self.assertEquals(response.redirect_chain, [])
 		self.assertEquals(response.status_code, 200)
+
+	def _create_user(self):
+		user = User.objects.create(username='キバ')
+		user.set_password('newUserpass46')
+		user.save()
+		return user
+
+	def test_delete(self):
+		# single & many pages
+		url = reverse('post-delete', kwargs={'pk': 32})
+		self._create_user()
+
+		# another user
+		self.client.login(username='キバ', password='newUserpass46')
+		response = self.client.get(url)
+		self.assertEquals(response.status_code, 403)
+
+		url = reverse('erase-all-posts', kwargs={'username': 'ナルト'})
+		response = self.client.get(url)
+		self.assertEquals(response.status_code, 200)
+
+		response = self.client.post(url, follow=True)
+		response_url = response.redirect_chain[0][0]
+		response_code = response.redirect_chain[0][1]
+		self.assertEquals(response_code, 302)
+		self.assertEquals(response_url, '/')
+
+
+
+
