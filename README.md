@@ -50,6 +50,19 @@ are implemented via Interface and Composition
 │   ├── real_estate_sklearn.ipynb
 │   └── regression_model.bin
 ├── README.md
+├── api
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── migrations
+│   │   ├── __init__.py
+│   ├── models.py
+│   ├── serializers.py
+│   ├── tests
+│   │   ├── __init__.py
+│   │   └── test_view.py
+│   ├── urls.py
+│   └── views.py
 ├── data_loader
 │   ├── __init__.py
 │   ├── admin.py
@@ -64,7 +77,9 @@ are implemented via Interface and Composition
 │   ├── templates
 │   │   └── data_loader
 │   │       └── make_load.html
-│   ├── tests.py
+│   ├── tests
+│   │   ├── __init__.py
+│   │   └── test_view.py
 │   └── views.py
 ├── db.sqlite3
 ├── general
@@ -114,7 +129,11 @@ are implemented via Interface and Composition
 │   │       ├── start_page.html
 │   │       ├── update_post.html
 │   │       └── user_posts.html
-│   ├── tests.py
+│   ├── tests
+│   │   ├── __init__.py
+│   │   ├── test_forms.py
+│   │   ├── test_model.py
+│   │   └── test_views.py
 │   ├── urls.py
 │   └── views.py
 ├── manage.py
@@ -126,7 +145,6 @@ are implemented via Interface and Composition
 │   │   ├── 8183BF8F-F393-4B12-9B6F-4147A616FFF9_s69UNqa.JPG
 │   └── user_photo
 │       ├── 6pu7Us-dDlk.jpg
-│       └── 8183BF8F-F393-4B12-9B6F-4147A616FFF9.JPG
 ├── notes.txt
 ├── prediction_price
 │   ├── __init__.py
@@ -135,6 +153,8 @@ are implemented via Interface and Composition
 │   ├── forms.py
 │   ├── migrations
 │   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── __init__.cpython-38.pyc
 │   ├── models.py
 │   ├── prediction_interface.py
 │   ├── prediction_model.py
@@ -146,7 +166,10 @@ are implemented via Interface and Composition
 │   │   └── prediction_price
 │   │       ├── prediction_result.html
 │   │       └── price_prediction.html
-│   ├── tests.py
+│   ├── tests
+│   │   ├── __init__.py
+│   │   ├── test_form.py
+│   │   └── test_view.py
 │   └── views.py
 ├── requirements.txt
 ├── tokyo_real_estate
@@ -190,7 +213,12 @@ are implemented via Interface and Composition
     │       ├── password_reset.html
     │       ├── profile_page.html
     │       └── register.html
-    ├── tests.py
+    ├── tests
+    │   ├── __init__.py
+    │   ├── test_decorators.py
+    │   ├── test_form.py
+    │   ├── test_model.py
+    │   ├── test_signals.py
+    │   └── test_views.py
     └── views.py
-
 ```
