@@ -39,7 +39,7 @@ are implemented via Interface and Composition
 
 2. Models are done via `MainInterface()` to enable loose-coupling and easy addition of other models. <br>
   Two models, in turn, are augmeneted via <ins>Composition</ins> by `Regression()` class.<br>
-  Also in these 2 classes there is model unpacking and function to trigger prediction which is done in that `Regression()` class.
+  Also in these 2 classes there are model unpacking and function to trigger prediction which is done in that `Regression()` class.
 
 3. `Regression()` class will do data transformation and prediction itself
 
