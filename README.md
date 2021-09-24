@@ -28,8 +28,10 @@ It's built:
 3. `prediction_price` has code to enable prediction and here deployed <ins>ML models</ins> <br>
 are implemented via Interface and Composition
 4. `data_loader` is a folder with mine-created tool to load data from Pandas into the model
-5. `ML_models` is a folder where you can find notebooks where I did all the data preparation and machine learning
-  + there you can see datasets (only preprocessed version as original one is too large)
+5. `ML_models` is a folder where you can find:
+   - 2 `.bin` models for production
+   - notebooks where I did all the data preparation and machine learning
+   - datasets
 
 <h4>More about structure</h4>
 
@@ -51,7 +53,7 @@ are implemented via Interface and Composition
 
 <ul>
   <li>For the base I used this dataset: https://www.kaggle.com/nishiodens/japan-real-estate-transaction-prices</li>
-  <li>Then I trimmed it and did all the preparations. Processed dataset can be seen in ML_models both `zipped` and `.csv` </li>
+  <li>Then I trimmed it and did all the preparations. Processed dataset can be seen in ML_models both "zipped" and ".csv" </li>
 </ul>
 
 
