@@ -52,6 +52,12 @@ class ViewTestCase(TestCase):
 			})
 		self.assertEquals(response.status_code, 409)
 
+		response = self.client.post(url, data={
+			'username': 'アスマ',
+			'password': '',
+			})
+		self.assertEquals(response.status_code, 409)
+
 	def test_patch(self):
 		# without pk/id
 		url = reverse('all-users-api')
@@ -63,8 +69,7 @@ class ViewTestCase(TestCase):
 			content_type='application/json')
 		self.assertEquals(response.status_code, 406)
 
-		# pk/bad pk/bad changes
-		url = reverse('all-users-api')
+		# pk
 		data = json.dumps({
 			"pk": 1,
 			"email": "random@mail.com",
@@ -74,6 +79,66 @@ class ViewTestCase(TestCase):
 			content_type='application/json')
 
 		self.assertEquals(response.status_code, 200)
+
+		#bad pk
+		data = json.dumps({
+			"pk": 4534,
+			"email": "some@mail.com"
+		})
+
+		response = self.client.patch(url, data,
+			content_type='application/json')
+
+		self.assertEquals(response.status_code, 204)
+
+		# bad changes
+		data = json.dumps({
+			"pk": 1,
+			"email": "some.com"
+		})
+
+		response = self.client.patch(url, data,
+			content_type='application/json')
+
+		self.assertEquals(response.status_code, 400)
+
+	def _create_user(self):
+		user = User.objects.create(username='ツナデ')
+		user.set_password('somePass534')
+		user.save()
+
+	def test_delete(self):
+		# no pk
+		url = reverse('all-users-api')
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 400)
+
+		# incorrect pk
+		url = reverse('one-user-api', kwargs={'pk': 434})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 400)
+
+		# correct pk
+		self._create_user()
+		url = reverse('one-user-api', kwargs={'pk': 2})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 200)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

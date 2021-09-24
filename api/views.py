@@ -77,6 +77,10 @@ I'll stick with APIView
 				status=status.HTTP_406_NOT_ACCEPTABLE)
 
 		user = User.objects.filter(pk=pk).first()
+		if not user:
+			return Response({'message': "Doesn't have user with such id"},
+				status=status.HTTP_204_NO_CONTENT)
+		
 		serializer = self.serializer_class(user, data=request.data,
 			partial=True)
 
