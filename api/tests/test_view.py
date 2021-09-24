@@ -252,20 +252,72 @@ class PropertyTestCase(TestCase):
 		response = self.client.post(url, data)
 		self.assertEquals(response.status_code, 400)
 
+	def test_patch(self):
+		# without id/pk of user
+		url = reverse('all-properties-api')
+		data = json.dumps({
+			"title": "New random super title"
+		})
+		response = self.client.patch(url, data,
+			content_type='application/json')
 
+		self.assertEquals(response.status_code, 400)
 
+		# checks with errors
+		url = reverse('all-properties-api')
+		data = json.dumps({
+			"title": "Rewritten title",
+			"pk": 1,
+			})
 
-			
+		response = self.client.patch(url, data,
+			content_type='application/json')
 
+		self.assertEquals(response.status_code, 400)
 
+		# superuser with wrong pk/id of post
+		user = self._create_superuser()
+		self.client.login(username='ザブザ', password='Momochi43')
 
+		data = json.dumps({
+			"title": "Here is title",
+			"pk": 431,
+			})
 
+		response = self.client.patch(url, data,
+			content_type='application/json')
 
+		self.assertEquals(response.status_code, 400)
 
+		# superuser without errors
+		data = json.dumps({
+			"pk": 1,
+			"age": 20,
+			})
 
+		response = self.client.patch(url, data,
+			content_type='application/json')
+		
+		self.assertEquals(response.status_code, 202)
 
+		post = PropertyClass.objects.filter(pk=1)
+		serializer = PropertySerializer(post, many=True)
+		serializer_data = dict(serializer.data[0])
+		self.assertEquals(serializer_data.get('age'), 20)
 
+		# superuser with bad changes
+		data = json.dumps({
+			"pk": 1,
+			"time_to_station": "",
+			})
 
+		response = self.client.patch(url, data,
+			content_type='application/json')
+
+		self.assertEquals(response.status_code, 400)
+
+	def test_delete(self):
+		pass
 
 
 
