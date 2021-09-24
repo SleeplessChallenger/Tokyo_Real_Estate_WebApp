@@ -20,9 +20,6 @@ It's built:
   <li>Myraid of Unit Tests to improve quality</li>
 </ul>
 
-<h3>Features</h3>
-
-
  
 <h3>Structure</h3>
 
@@ -33,6 +30,18 @@ are implemented via Interface and Composition
 4. `data_loader` is a folder with mine-created tool to load data from Pandas into the model
 5. `ML_models` is a folder where you can find notebooks where I did all the data preparation and machine learning
   + there you can see datasets (only preprocessed version as original one is too large)
+
+<h4>More about structure</h4>
+
+1. Machine Learning models are done via Sklearn where first model is `Ridge()` and second is `Decision Tree Regressor()`
+
+2. Models are done via `MainInterface()` to enable loose-coupling and easy addition of other models. <br>
+  Two models, in turn, are augmeneted via <ins>Composition</ins> by `Regression()` class.<br>
+  Also in these 2 classes there is model unpacking and function to trigger prediction which is done in that `Regression()` class.
+
+3. `Regression()` class will do data transformation and prediction itself
+4. I left on purpose `.env` (as it's not a production level) where you can find `secret_key` required for app to work.
+ 
 
 <h3>Further description</h3>
 
