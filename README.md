@@ -2,18 +2,27 @@
 
 <h2>Full-Stack Django app with ML prediction feature</h2>
 
-In this project I'm doing a Web-app with ML
+This is a project that resembles real-estate site. 
+It's built:
+ - with Django on backend
+ - dynamic templates with Bootsrtap/HTML/CSS on the frontend
+ - as a DB I used Sqlite and for model creation - in-built Django-ORM
+ - considering Machine Learning part, I used Sklearn to build 2 models
 
 <h3>Features</h3>
 
 <ul>
-  <li>CRUD for account & posts</li>
-  <li>Custom data loader from pandas</li>
+  <li>CRUD for users/posts/APIs</li>
+  <li>Custom data loader from pandas to inject data from exisitng file</li>
   <li>2 ML models to predict price from prefilled or bare form</li>
-  <li>Form for posts bulk delete</li>
-  <li>APIs to get various JSON data</li>
-  <li>Unit tests to improve quality</li>
- </ul>
+  <li>Special form for posts bulk delete</li>
+  <li>APIs for users/posts/profile</li>
+  <li>Myraid of Unit Tests to improve quality</li>
+</ul>
+
+<h3>Features</h3>
+
+
  
 <h3>Structure</h3>
 
