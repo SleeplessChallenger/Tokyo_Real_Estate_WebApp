@@ -51,5 +51,3 @@ class PricePredictionView(TestCase):
 		url = reverse('price-prediction', kwargs={'pk': 32})
 		response = self.client.get(url)
 		self.assertEquals(response.status_code, 200)
-
-

@@ -80,7 +80,7 @@ I'll stick with APIView
 		if not user:
 			return Response({'message': "Doesn't have user with such id"},
 				status=status.HTTP_204_NO_CONTENT)
-		
+
 		serializer = self.serializer_class(user, data=request.data,
 			partial=True)
 
@@ -153,7 +153,8 @@ class PropertyViewSet(viewsets.ModelViewSet):
 
 		if first_check or second_check:
 			return Response(
-				{'message': "You can't specify others as authors unless you're admin"})
+				{'message': "You can't specify others as authors unless you're admin"},
+				status=status.HTTP_409_CONFLICT)
 
 		serializer = self.serializer_class(data=request.data)
 

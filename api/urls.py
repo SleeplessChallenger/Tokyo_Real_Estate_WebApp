@@ -17,5 +17,3 @@ urlpatterns = [
 	path('properties/<int:pk>', views.PropertyView.as_view(), name='one-property-api'),
 
 ]
-
-# Section 8.5: Try to Keep Business Logic Out of Views
