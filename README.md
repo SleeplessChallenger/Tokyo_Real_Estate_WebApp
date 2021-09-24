@@ -153,8 +153,6 @@ are implemented via Interface and Composition
 │   ├── forms.py
 │   ├── migrations
 │   │   ├── __init__.py
-│   │   └── __pycache__
-│   │       └── __init__.cpython-38.pyc
 │   ├── models.py
 │   ├── prediction_interface.py
 │   ├── prediction_model.py
