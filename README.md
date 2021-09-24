@@ -2,11 +2,11 @@
 
 <h2>Full-Stack Django app with ML prediction feature</h2>
 
-This is a project that resembles real-estate site. 
+This is a project that resembles real-estate site.<br>
 It's built:
  - with Django on backend
- - dynamic templates with Bootsrtap/HTML/CSS on the frontend
- - as a DB I used Sqlite and for model creation - in-built Django-ORM
+ - dynamic templates with Bootstrap/HTML/CSS on the frontend
+ - as a DB I used Sqlite and for model creation: in-built Django-ORM
  - considering Machine Learning part, I used Sklearn to build 2 models
 
 <h3>Features</h3>
@@ -40,21 +40,18 @@ are implemented via Interface and Composition
   Also in these 2 classes there is model unpacking and function to trigger prediction which is done in that `Regression()` class.
 
 3. `Regression()` class will do data transformation and prediction itself
-4. I left on purpose `.env` (as it's not a production level) where you can find `secret_key` required for app to work.
+
+4. In `Jupyter notebooks` you can observe model creation. In `real_estate_sklearn.ipynb` there is linear regression<br>
+  implemented via a) bare numpy & python b) Sklearn. In `real_estate_dt_rf.ipynb` there is `DTR` via Sklearn.
+  
+5. I left on purpose `.env` (as it's not a production level) where you can find `secret_key` required for app to work.
  
 
-<h3>Further description</h3>
+<h3>Data</h3>
 
-1. Data
 <ul>
   <li>For the base I used this dataset: https://www.kaggle.com/nishiodens/japan-real-estate-transaction-prices</li>
-  <li>Then I trimmed it and did all the preparations. Processed dataset can be seen in repo. It's zipped</li>
-</ul>
-
-2. Models
-<ul>
-  <li>at first I did regression with numpy and bare python</li>
-  <li>then I used sklearn to unleash regressions of various kinds: from Ridge() to RandomForestRegressor</li>
+  <li>Then I trimmed it and did all the preparations. Processed dataset can be seen in ML_models both `zipped` and `.csv` </li>
 </ul>
 
 
