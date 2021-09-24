@@ -317,13 +317,27 @@ class PropertyTestCase(TestCase):
 		self.assertEquals(response.status_code, 400)
 
 	def test_delete(self):
-		pass
+		self._get_property_data()
 
+		# wrong pk
+		url = reverse('one-property-api', kwargs={'pk': 4})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 400)
 
+		# without login, right pk
+		url = reverse('one-user-api', kwargs={'pk': 2})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 400)
 
+		# login, but wrong pk
+		user = self._create_superuser()
+		self.client.login(username='ザブザ', password='Momochi43')
 
+		url = reverse('one-user-api', kwargs={'pk': 43})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 400)
 
-
-
-
-
+		# login and right pk
+		url = reverse('one-user-api', kwargs={'pk': 2})
+		response = self.client.delete(url)
+		self.assertEquals(response.status_code, 200)
