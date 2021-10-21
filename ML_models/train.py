@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 import pandas as pd
 import zipfile
+from concurrent.futures.process import ProcessPoolExecutor as PoolExecutor
 
 
 
@@ -22,9 +23,23 @@ class MainInterface:
 
 	def train_models(self):
 		results = []
+		from datetime import datetime
 
-		for model in self.models:
-			results.append(model.train_model())
+		t0 = datetime.now()
+
+		# try asyncio or threads
+		with PoolExecutor(max_workers=4) as executor:
+
+			for model in self.models:
+				future: Future = executor.submit(model.train_model)
+
+				results.append(future)
+
+		# for model in self.models:
+		# 	results.append(model.train_model())
+
+		t1 = datetime.now() - t0
+		print(t1)
 
 		return results
 
@@ -41,7 +56,7 @@ class MainPreprocess:
 
 
 	def _read_processed(self):
-		with zipfile.ZipFile(self.processed_file, 'r') as zip_f:
+		with zipfile.ZipFile(self.zip_file, 'r') as zip_f:
 			with zip_f.open(self.csv_file, 'r') as file:
 				return pd.read_csv(file, index_col='No')
 
@@ -51,7 +66,7 @@ class MainPreprocess:
 
 		X_train, X_test = self._convert_X(df_train_dict, df_test_dict)
 
-		return X_train, X_test, y_tr, y_ts
+		return X_train, X_test, y_tr, y_ts, self.dv
 
 	def _split_df(self):
 		train, test = train_test_split(self.df, test_size=0.2, random_state=1)
@@ -61,7 +76,7 @@ class MainPreprocess:
 		del train['tradeprice']
 		del test['tradeprice']
 
-		return train, test, y_train, y_test, self.dv
+		return train, test, y_train, y_test
 
 	def _convert_dict(self, df1, df2):
 		dict1 = df1[self.features].to_dict(orient='records')
@@ -84,12 +99,13 @@ class RidgeClass(TrainInterface, MainPreprocess):
 	def __init__(self):
 		self.model_name = 'Ridge regression'
 		self.model = Ridge()
+		self.process = MainPreprocess()
 
 	def __repr__(self):
 		return f"Model: {self.model}"
 
 	def train_model(self):
-		X_train, X_test, y_tr, y_ts, dv = super().prepare_data()
+		X_train, X_test, y_tr, y_ts, dv = self.process.prepare_data()
 
 		self.model.fit(X_train, y_tr)
 		y_pred = self.model.predict(X_test)
@@ -111,12 +127,13 @@ class dtRegressorClass(TrainInterface, MainPreprocess):
 		self.model_name = 'DecisionTree Regressor'
 		self.model = DecisionTreeRegressor(max_depth=20, min_samples_leaf=20,
                             max_features=None, random_state=5)
+		self.process = MainPreprocess()
 
 	def __repr__(self):
 		return f"Model: {self.model_name}"
 
 	def train_model(self):
-		X_train, X_test, y_tr, y_ts, dv = super().prepare_data()
+		X_train, X_test, y_tr, y_ts, dv = self.process.prepare_data()
 
 		self.model.fit(X_train, y_tr)
 		y_pred = self.model.predict(X_test)
@@ -129,7 +146,7 @@ class dtRegressorClass(TrainInterface, MainPreprocess):
 
 	def _serialize_model(self, dv):
 		with open('dt_model_2', 'wb') as dt_model:
-			dump((dv, self.model, dt_model))
+			dump((dv, self.model), dt_model)
 
 
 if __name__ == '__main__':
@@ -138,5 +155,7 @@ if __name__ == '__main__':
 	model2 = dtRegressorClass()
 	models = MainInterface(model1, model2)
 
-	MainInterface().train_models()
+	results = models.train_models()
+	for r in results:
+		print(r.result(), flush=True)
 	
