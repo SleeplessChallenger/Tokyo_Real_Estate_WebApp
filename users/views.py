@@ -61,6 +61,7 @@ def display_users(request):
 
 	# return render(request, 'users/all_users.html', context)
 
+
 @login_required_message
 @login_required
 def tweak_profile(request):
