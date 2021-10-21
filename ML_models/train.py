@@ -1,4 +1,4 @@
-from sklearn.linear_models import Ridge
+from sklearn.linear_model import Ridge
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
@@ -6,15 +6,27 @@ from pickle import load, dump
 from abc import ABC, abstractmethod
 import numpy as np
 import pandas as pd
-import os
 import zipfile
-from pathlib import Path
+
 
 
 class TrainInterface(ABC):
 	@abstractmethod
 	def train_model(self):
 		raise NotImplementedError("You don't reaize the method")
+
+
+class MainInterface:
+	def __init__(self, *args):
+		self.models = args
+
+	def train_models(self):
+		results = []
+
+		for model in self.models:
+			results.append(model.train_model())
+
+		return results
 
 
 class MainPreprocess:
@@ -49,7 +61,7 @@ class MainPreprocess:
 		del train['tradeprice']
 		del test['tradeprice']
 
-		return train, test, y_train, y_test
+		return train, test, y_train, y_test, self.dv
 
 	def _convert_dict(self, df1, df2):
 		dict1 = df1[self.features].to_dict(orient='records')
@@ -62,32 +74,69 @@ class MainPreprocess:
 		X_valid = self.dv.transform(df2)
 		return X_train, X_valid
 
+	def _rmse(self, y_real, y_predict):
+		error = y_predict - y_real
+		mse = (error ** 2).mean()
+		return np.sqrt(mse)
+
 
 class RidgeClass(TrainInterface, MainPreprocess):
 	def __init__(self):
+		self.model_name = 'Ridge regression'
 		self.model = Ridge()
+
+	def __repr__(self):
+		return f"Model: {self.model}"
+
+	def train_model(self):
+		X_train, X_test, y_tr, y_ts, dv = super().prepare_data()
+
+		self.model.fit(X_train, y_tr)
+		y_pred = self.model.predict(X_test)
+
+		rmse = super()._rmse(y_ts, y_pred)
+
+		self._serialize_model(dv)
+
+		return f"{self.__repr__()}; rmse: {rmse}"
+
 		
-
-	def __call__(self):
-		pass
-
-
-	def _serialize_model(self):
+	def _serialize_model(self, dv):
 		with open('regression_model_2.bin', 'wb') as reg_model:
-			dump((dv, model), reg_model)
+			dump((dv, self.model), reg_model)
 
 
 class dtRegressorClass(TrainInterface, MainPreprocess):
 	def __init__(self):
+		self.model_name = 'DecisionTree Regressor'
 		self.model = DecisionTreeRegressor(max_depth=20, min_samples_leaf=20,
                             max_features=None, random_state=5)
 
-	def _serialize_model(self):
-		with open('dt_model_2', 'wb') as dt_model:
-			dump((dv, model, dt_model))
+	def __repr__(self):
+		return f"Model: {self.model_name}"
 
+	def train_model(self):
+		X_train, X_test, y_tr, y_ts, dv = super().prepare_data()
+
+		self.model.fit(X_train, y_tr)
+		y_pred = self.model.predict(X_test)
+
+		rmse = super()._rmse(y_ts, y_pred)
+
+		self._serialize_model(dv)
+
+		return f"{self.__repr__()}; rmse: {rmse}"
+
+	def _serialize_model(self, dv):
+		with open('dt_model_2', 'wb') as dt_model:
+			dump((dv, self.model, dt_model))
 
 
 if __name__ == '__main__':
-	pass
+	# list all the models to be trained
+	model1 = RidgeClass()
+	model2 = dtRegressorClass()
+	models = MainInterface(model1, model2)
+
+	MainInterface().train_models()
 	
