@@ -2,6 +2,11 @@
 
 <h2>Full-Stack Django app with ML prediction feature</h2>
 
+<h4>Deployed with **Docker**</h4>: `docker pull enoshima/tokyo_project:latest` <br>
+ - after that command, run: `docker run --name tokyo_container -d -p 8085:8080 enoshima/tokyo_project:latest`
+ - If current ports are already used, then: **first** one is port which will be displayed and **second** one is the<br>
+   port specified in the `Dockerfile`. Hence change **<ins>first</ins>** one to match to another port.
+
 This is a project that resembles real-estate site.<br>
 It's built:
  - with Django on backend
