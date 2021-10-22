@@ -7,6 +7,8 @@
  - If current ports are already used, then: **first** one is port which will be displayed and **second** one is the<br>
    port specified in the `Dockerfile`. Hence change <ins>first</ins> one to match to another port.
 
+<hr>
+
 This is a project that resembles real-estate site.<br>
 It's built:
  - with Django on backend
