@@ -1,5 +1,3 @@
-**Under development**
-
 <h2>Full-Stack Django app with ML prediction feature</h2>
 
 **Deployed with Docker**: `docker pull enoshima/tokyo_project:latest` <br>
