@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import zipfile
 from concurrent.futures.process import ProcessPoolExecutor as PoolExecutor
-
+import multiprocessing
 
 
 class TrainInterface(ABC):
@@ -23,23 +23,15 @@ class MainInterface:
 
 	def train_models(self):
 		results = []
-		from datetime import datetime
 
-		t0 = datetime.now()
+		processor_count = multiprocessing.cpu_count()
 
-		# try asyncio or threads
-		with PoolExecutor(max_workers=4) as executor:
+		with PoolExecutor(max_workers=processor_count) as executor:
 
 			for model in self.models:
-				future: Future = executor.submit(model.train_model)
+				future = executor.submit(model.train_model)
 
 				results.append(future)
-
-		# for model in self.models:
-		# 	results.append(model.train_model())
-
-		t1 = datetime.now() - t0
-		print(t1)
 
 		return results
 
@@ -145,7 +137,7 @@ class dtRegressorClass(TrainInterface, MainPreprocess):
 		return f"{self.__repr__()}; rmse: {rmse}"
 
 	def _serialize_model(self, dv):
-		with open('dt_model_2', 'wb') as dt_model:
+		with open('dt_model_2.bin', 'wb') as dt_model:
 			dump((dv, self.model), dt_model)
 
 
