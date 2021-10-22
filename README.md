@@ -2,7 +2,7 @@
 
 <h2>Full-Stack Django app with ML prediction feature</h2>
 
-**Deployed with Docker: `docker pull enoshima/tokyo_project:latest` <br>
+**Deployed with Docker**: `docker pull enoshima/tokyo_project:latest` <br>
 
  - after that command, run: `docker run --name tokyo_container -d -p 8085:8080 enoshima/tokyo_project:latest`
  - If current ports are already used, then: **first** one is port which will be displayed and **second** one is the<br>
