@@ -28,6 +28,7 @@ It's built:
   <li>Special form for posts bulk delete</li>
   <li>APIs for users/posts/profile</li>
   <li>Myraid of Unit Tests to improve quality</li>
+  <li>For compatibility I used `pipenv` + `requirements.txt` with **Docker**
 </ul>
 
  
