@@ -41,7 +41,9 @@ are implemented via Interface and Composition
 5. `ML_models` is a folder where you can find:
    - 2 `.bin` models for production
    - notebooks where I did all the data preparation and machine learning
-   - datasets
+   - zip dataset
+   - `train.py` to train 2 final models. It's done with interfaces and for speed up
+     I used **multiprocessing**.
 
 <h4>More about structure</h4>
 
