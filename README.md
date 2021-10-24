@@ -28,7 +28,7 @@ It's built:
   <li>Special form for posts bulk delete</li>
   <li>APIs for users/posts/profile</li>
   <li>Myraid of Unit Tests to improve quality</li>
-  <li>For compatibility I used `pipenv` + `requirements.txt` with **Docker**
+  <li>For compatibility I used pipenv + requirements.txt with Docker
 </ul>
 
  
@@ -72,13 +72,16 @@ are implemented via Interface and Composition
 
 ```bash
 .
+├── Dockerfile
 ├── ML_models
 │   ├── decision_tree_model.bin
 │   ├── real_estate_dt_rf.ipynb
-│   ├── real_estate_processed.csv
 │   ├── real_estate_processed.csv.zip
-│   ├── real_estate_sklearn.ipynb
-│   └── regression_model.bin
+│   ├── real_estate_regression.ipynb
+│   ├── regression_model.bin
+│   └── train.py
+├── Pipfile
+├── Pipfile.lock
 ├── README.md
 ├── api
 │   ├── __init__.py
@@ -172,7 +175,6 @@ are implemented via Interface and Composition
 │   ├── default_property.jpg
 │   ├── propery_photo
 │   │   ├── 8183BF8F-F393-4B12-9B6F-4147A616FFF9.JPG
-│   │   ├── 8183BF8F-F393-4B12-9B6F-4147A616FFF9_s69UNqa.JPG
 │   └── user_photo
 │       ├── 6pu7Us-dDlk.jpg
 ├── notes.txt
