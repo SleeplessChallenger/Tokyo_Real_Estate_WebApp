@@ -2,3 +2,8 @@ __pycache__/
 **/.DS_Store
 **/*.ipynb_checkpoints/
 **/.coverage
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
