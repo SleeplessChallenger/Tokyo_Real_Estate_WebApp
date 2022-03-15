@@ -22,7 +22,6 @@ from django.contrib.auth import views as auth_views
 from prediction_price import views as predict_views
 from data_loader import views as data_views
 from users import views as user_views
-from general import views as general_views
 
 
 urlpatterns = [
@@ -64,3 +63,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT)
+
+# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+# urlpatterns += staticfiles_urlpatterns()

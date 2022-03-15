@@ -88,6 +88,7 @@ body {
 img {
 	border-radius: 15%;
 	margin: 1rem;
+	size: 0.5 rem;
 }
 
 .options {

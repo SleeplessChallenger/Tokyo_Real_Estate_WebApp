@@ -52,7 +52,6 @@ class DataInjection:
 	def model(self, instance):
 		self._model = instance
 
-
 	def process_data(self):
 		for idx in self.indicies:
 			data = {}
@@ -88,7 +87,6 @@ class DataInjection:
 				author=self.user,
 				title=choice(self.various_titles)
 			)
-
 
 	def _get_numbers(self, lower=2, upper=400000, step=10000):
 		all_numbers = []

@@ -10,6 +10,7 @@
  and click <ins>Predict</ins>.
  - Alternatively, visit <ins>Additional actions -> Calculate approx. .. </ins>
 
+**Deprecated: was deployed with AWS, but due to expenses removed it**<br>
 **Deployed with AWS EB**: put in browser `tokyo-ml.eba-qjriabzm.us-west-2.elasticbeanstalk.com`.
 
  - however, for the time being I didn't manage to fix <ins>static files issue</ins> `=>` it works without proper `css`

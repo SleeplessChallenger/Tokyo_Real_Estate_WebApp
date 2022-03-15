@@ -25,23 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['tokyo-ml.eba-qjriabzm.us-west-2.elasticbeanstalk.com',
      '127.0.0.1']
-
-
-# Application definition
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient"
-#         },
-#         "KEY_PREFIX": "redis_db"
-#     }
-# }
 
 
 INSTALLED_APPS = [
@@ -160,5 +147,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'start-page'
 LOGIN_URL = 'login'
-
-# SESSION_SAVE_EVERY_REQUEST = True
